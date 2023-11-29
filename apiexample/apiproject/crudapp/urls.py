@@ -20,6 +20,6 @@ from .views import StudentView
 
 urlpatterns = [
     path('check/',StudentView.as_view()),
-    path('check/<int:id>/',StudentView.as_view()),
-    path('check/<int:id>/update/',StudentView.as_view()),
+    path('check/<str:_id>/',StudentView.as_view()),
+    path('check/<str:_id>/update/',StudentView.as_view()),
 ]

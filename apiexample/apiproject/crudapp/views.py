@@ -5,11 +5,13 @@ from rest_framework import status
 from .models import Students
 from .serializers import StudentSerializer
 from django.shortcuts import get_object_or_404
+from bson import ObjectId
+
 
 class StudentView(APIView):
-     def get(self, request, id=None): 
-        if id: 
-            result = Students.objects.get(id = id)  
+     def get(self, request, _id=None): 
+        if _id: 
+            result = Students.objects.get(_id = ObjectId(_id))  
             serializers = StudentSerializer(result)  
             return Response({"students":serializers.data}, status=200)  
   
@@ -26,8 +28,8 @@ class StudentView(APIView):
             return Response({"message": serializer.errors}, status=400)
           
     
-     def patch(self, request, id=None):
-        student = get_object_or_404(Students, id=id)
+     def patch(self, request, _id=None):
+        student = get_object_or_404(Students, _id = ObjectId(_id))
         serializer = StudentSerializer(student, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -35,7 +37,7 @@ class StudentView(APIView):
         else:
             return Response({"message": serializer.errors}, status=400)
         
-     def delete(self,request,id=None):
-        student = get_object_or_404(Students, id=id)
+     def delete(self,request,_id=None):
+        student = get_object_or_404(Students, _id = ObjectId(_id))
         student.delete()
         return Response({"message":" Student data deleted successfully"})
